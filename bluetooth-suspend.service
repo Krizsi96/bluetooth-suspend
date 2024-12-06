@@ -1,0 +1,13 @@
+[Unit]
+Description=Disable Bluetooth before suspend and enable it on resume
+Before=suspend.target
+After=bluetooth.service
+
+[Service]
+Type=oneshot
+ExecStart=rfkill block bluetooth
+ExecStop=rfkill unblock bluetooth
+RemainAfterExit=true
+
+[Install]
+WantedBy=suspend.target
