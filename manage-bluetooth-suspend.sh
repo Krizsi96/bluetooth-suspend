@@ -1,10 +1,10 @@
 #!/bin/bash
 
-SERVICE_NAME="bluetooth-suspend.service"
+SERVICE_NAME="bluetooth-suspend.sh"
 SOURCE_FILE="./$SERVICE_NAME"
-DESTINATION="/etc/systemd/system/$SERVICE_NAME"
+DESTINATION="/usr/lib/systemd/system-sleep/$SERVICE_NAME"
 
-install_service() {
+install_script() {
 	echo "Installing $SERVICE_NAME..."
 
 	if [ ! -f "$SOURCE_FILE" ]; then
@@ -15,20 +15,11 @@ install_service() {
 	echo "Copying $SERVICE_NAME to $DESTINATION..."
 	sudo cp "$SOURCE_FILE" "$DESTINATION"
 
-	echo "Reloading systemd daemon..."
-	sudo systemctl daemon-reload
-
-	echo "Enabling $SERVICE_NAME..."
-	sudo systemctl enable "$SERVICE_NAME"
-
-	echo "Installation complete. The service is now active."
+	echo "Installation complete. The script is now active for system-sleep"
 }
 
 uninstall_service() {
 	echo "Uninstalling $SERVICE_NAME..."
-
-	echo "Disabling $SERVICE_NAME..."
-	sudo systemctl disable "$SERVICE_NAME"
 
 	if [ -f "$DESTINATION" ]; then
 		echo "Removing $SERVICE_NAME from $DESTINATION..."
@@ -37,17 +28,14 @@ uninstall_service() {
 		echo "Service file not found in $DESTINATION. Skipping removal."
 	fi
 
-	echo "Reloading systemd daemon..."
-	sudo systemctl daemon-reload
-
-	echo "Uninstallation complete. The service has been removed."
+	echo "Uninstallation complete. The script has been removed."
 }
 
 
 if [ "$1" == "install" ]; then
-	install_service
+	install_script
 elif [ "$1" == "uninstall" ]; then
-	uninstall_service
+	uninstall_script
 else
 	echo "Usage: $0 [install|uninstall]"
 	exit 1

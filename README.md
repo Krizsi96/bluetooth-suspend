@@ -1,5 +1,5 @@
 # bluetooth-suspend
-`systemd` service to toggle Bluetooth when PC goes to suspend.
+Script for `systemd` to toggle Bluetooth when PC goes to suspend.
 
 ## Installation
 
@@ -9,15 +9,7 @@ You can install the service via running the `manage-bluetooth-suspend.sh` script
 ./manage-bluetooth-suspend.sh install
 ```
 
-This will copy the service file to the `systemd` folder, reload the services and enable the service.
-
-## Check status
-
-You can check the status of the service and its logs with the following command.
-
-```shell
-systemctl status bluetooth-suspend.service
-```
+This will copy the script to the `systemd/system-sleep` folder so that `systemd` can call it on sleep events.
 
 ## Uninstallation
 
@@ -27,4 +19,4 @@ To uninstall the service, run the following command.
 ./manage-bluetooth-suspend.sh uninstall
 ```
 
-This will disable the service, reload `systemd` and remove the service file from the `systemd` folder.
+This will remove the script from the `systemd/system-sleep` folder.
